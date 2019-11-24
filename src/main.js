@@ -1,3 +1,5 @@
+`use strict`;
+
 const ITEM_COUNT = 3;
 
 const createInfoTemplate = () => {
@@ -424,8 +426,9 @@ const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
-const createArray = (count) => {
-  return new Array(count).fill(``);
+const createArray = (count, element) => {
+  new Array(count).fill(``)
+    .forEach(() => render(element, createItemTemplare()));
 };
 
 const siteMainElement = document.querySelector(`.page-body`);
@@ -443,5 +446,4 @@ render(siteEventsElement, createSortTemplate());
 render(siteEventsElement, createEditTemplate());
 render(siteEventsElement, createItemsTemplate());
 
-createArray(ITEM_COUNT)
-  .forEach(() => render(siteEventsElement.lastElementChild, createItemTemplare()));
+createArray(ITEM_COUNT, siteEventsElement.lastElementChild);
