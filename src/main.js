@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const ITEM_COUNT = 3;
 
