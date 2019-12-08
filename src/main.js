@@ -1,4 +1,5 @@
 import {createInfoTemplate} from './components/info.js';
+import {createPriceTemplate} from './components/price.js';
 import {createMenuTemplate} from './components/menu.js';
 import {createFilterTemplate} from './components/filter.js';
 import {createSortTemplate} from './components/sort.js';
@@ -31,7 +32,9 @@ const tripArray = generateTrips().sort(sortDateArray);
 const siteMainElement = document.querySelector(`.page-body`);
 const siteInfoElement = siteMainElement.querySelector(`.trip-main__trip-info`);
 
-render(siteInfoElement, createInfoTemplate(tripsInfo(tripArray)), `afterbegin`);
+const tripInfo = tripsInfo(tripArray);
+render(siteInfoElement, createInfoTemplate(tripInfo), `afterbegin`);
+render(siteInfoElement, createPriceTemplate(tripInfo));
 
 const siteControlElement = siteMainElement
   .querySelector(`.trip-main__trip-controls`);
