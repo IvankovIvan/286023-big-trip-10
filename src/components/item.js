@@ -1,5 +1,17 @@
-import {getTimeFormat, getDateFormatISO,
-  getTimeFormatString} from '../utilsDate.js';
+import {getTimeFormat} from '../utilsDate.js';
+import {getDateFormatUS} from "../utilsDate";
+
+const getTimeFormatString = (dateTime) => {
+  const hour = dateTime.getHours();
+  const minute = dateTime.getMinutes();
+  let date = hour === 0 ? `` : hour + `H `;
+  date += minute === 0 ? `` : minute + `M`;
+  return date;
+};
+
+const getDateFormatISO = (dateTime) => {
+  return getDateFormatUS(dateTime) + `T` + getTimeFormat(dateTime);
+};
 
 const createOffersMarkup = (offers) => {
   return offers

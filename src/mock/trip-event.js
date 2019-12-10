@@ -1,15 +1,10 @@
 import {TransferTypes, ActivityTypes,
   Cities, DescriptionLine, EventOffers} from '../const.js';
-import {getRandomIntegerNumber} from '../utils.js';
+import {getRandomIntegerNumber, generateArrayEmpty} from '../utils.js';
 import {PHOTO_COUNT_MAX, PRICE_MAX, DESCRIPTION_MAX_LINE} from './const.js';
 
 const generateValueFromArray = (array) => {
   return array[getRandomIntegerNumber(array.length - 1)];
-};
-
-const generateArrayEmpty = (count) => {
-  return new Array(count)
-    .fill(``);
 };
 
 const generateArray = (count) => {
@@ -71,10 +66,8 @@ const getDuration = (dateStart, dateEnd) => {
 const generateTripEvent = (date) => {
   const type = generateValueFromArray(TransferTypes.concat(ActivityTypes));
   const typeToLine = getTypeToLine(type);
-  // console.log(date);
   const dateCurrent = new Date(date);
   const timeStart = new Date(date);
-  // console.log(date, timeStart);
   const timeStartHour = generateHour(0, 22);
   timeStart.setHours(timeStartHour, generateHour(0, 59));
 

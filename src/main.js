@@ -6,9 +6,8 @@ import {createSortTemplate} from './components/sort.js';
 import {createEditTemplate} from './components/edit.js';
 import {createItemsTemplate} from './components/items.js';
 import {createItemDayTemplate} from './components/itemDay.js';
-import {generateTrips} from './mock/trip.js';
+import {generateTrips} from './mock/trips.js';
 import {Menu, Filters, TRIP_POINT_VIEW} from './const.js';
-import {tripsInfo} from './utilsTrip.js';
 import {sortDateArray} from './utilsDate.js';
 
 const render = (container, template, place = `beforeend`) => {
@@ -32,9 +31,8 @@ const tripArray = generateTrips().sort(sortDateArray);
 const siteMainElement = document.querySelector(`.page-body`);
 const siteInfoElement = siteMainElement.querySelector(`.trip-main__trip-info`);
 
-const tripInfo = tripsInfo(tripArray);
-render(siteInfoElement, createInfoTemplate(tripInfo), `afterbegin`);
-render(siteInfoElement, createPriceTemplate(tripInfo));
+render(siteInfoElement, createInfoTemplate(tripArray), `afterbegin`);
+render(siteInfoElement, createPriceTemplate(tripArray));
 
 const siteControlElement = siteMainElement
   .querySelector(`.trip-main__trip-controls`);

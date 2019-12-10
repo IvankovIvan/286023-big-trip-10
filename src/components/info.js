@@ -1,4 +1,7 @@
-export const createInfoTemplate = (tripInfo) => {
+import {tripsInfo} from '../utilsTrip';
+
+export const createInfoTemplate = (tripArray) => {
+  const tripInfo = tripsInfo(tripArray);
   return (
     `<div class="trip-info__main">
       <h1 class="trip-info__title"

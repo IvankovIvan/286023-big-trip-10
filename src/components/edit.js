@@ -1,5 +1,13 @@
 import {TransferTypes, ActivityTypes, Cities, EventOffers} from '../const.js';
-import {getDateFormatSmallDateTime} from '../utilsDate.js';
+import {castTimeFormat} from '../utilsDate.js';
+
+const getDateFormatSmallDateTime = (dateTime, separation = `/`) => {
+  return (`${castTimeFormat(dateTime.getDate())}${separation}${
+    castTimeFormat(dateTime.getMonth())}${separation}${
+    dateTime.getFullYear().toString().slice(-2)} ${
+    castTimeFormat(dateTime.getHours())}:${
+    castTimeFormat(dateTime.getMinutes())}`);
+};
 
 const createTypesMarkup = (type) => {
   const typeLowerCase = type.toLowerCase();
