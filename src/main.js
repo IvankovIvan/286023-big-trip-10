@@ -6,7 +6,8 @@ import PriceComponent from './components/price.js';
 import MenuComponent from './components/menu.js';
 // import {createFilterTemplate} from './components/filter.js';
 import FilterComponent from './components/filter.js';
-import {createSortTemplate} from './components/sort.js';
+// import {createSortTemplate} from './components/sort.js';
+import SortComponent from './components/sort.js';
 import {createEditTemplate} from './components/edit.js';
 import {createItemsTemplate} from './components/items.js';
 import {createItemDayTemplate} from './components/itemDay.js';
@@ -52,7 +53,8 @@ renderElement(siteControlElement.firstElementChild, new MenuComponent(Menu).getE
 renderElement(siteControlElement, new FilterComponent(Filters).getElement());
 
 const siteEventsElement = siteMainElement.querySelector(`.trip-events`);
-render(siteEventsElement, createSortTemplate());
+// render(siteEventsElement, createSortTemplate());
+renderElement(siteEventsElement, new SortComponent().getElement());
 render(siteEventsElement, createEditTemplate(tripArray[0]));
 render(siteEventsElement, createItemsTemplate());
 
