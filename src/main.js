@@ -2,9 +2,10 @@
 import InfoComponent from './components/info.js';
 // import {createPriceTemplate} from './components/price.js';
 import PriceComponent from './components/price.js';
-
-import {createMenuTemplate} from './components/menu.js';
-import {createFilterTemplate} from './components/filter.js';
+// import {createMenuTemplate} from './components/menu.js';
+import MenuComponent from './components/menu.js';
+// import {createFilterTemplate} from './components/filter.js';
+import FilterComponent from './components/filter.js';
 import {createSortTemplate} from './components/sort.js';
 import {createEditTemplate} from './components/edit.js';
 import {createItemsTemplate} from './components/items.js';
@@ -39,13 +40,16 @@ const siteInfoElement = siteMainElement.querySelector(`.trip-main__trip-info`);
 renderElement(siteInfoElement, new InfoComponent(tripArray).getElement(),
     RenderPosition.AFTERBEGIN);
 // render(siteInfoElement, createPriceTemplate(tripArray));
-renderElement(siteInfoElement, new PriceComponent(tripArray).getElement())
+renderElement(siteInfoElement, new PriceComponent(tripArray).getElement());
+
 const siteControlElement = siteMainElement
   .querySelector(`.trip-main__trip-controls`);
-
-render(siteControlElement.firstElementChild, createMenuTemplate(Menu),
-    `afterend`);
-render(siteControlElement, createFilterTemplate(Filters));
+renderElement(siteControlElement.firstElementChild, new MenuComponent(Menu).getElement(),
+    RenderPosition.AFTERNODE);
+// render(siteControlElement.firstElementChild, createMenuTemplate(Menu),
+//     `afterend`);
+// render(siteControlElement, createFilterTemplate(Filters));
+renderElement(siteControlElement, new FilterComponent(Filters).getElement());
 
 const siteEventsElement = siteMainElement.querySelector(`.trip-events`);
 render(siteEventsElement, createSortTemplate());

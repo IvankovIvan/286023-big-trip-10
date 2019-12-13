@@ -1,6 +1,7 @@
 export const RenderPosition = {
   AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`
+  BEFOREEND: `beforeend`,
+  AFTERNODE: `afternode`
 };
 
 export const getRandomIntegerNumber = (max = 1000, min = 0) => {
@@ -23,6 +24,9 @@ export const renderElement = (container, element, place = RenderPosition.BEFOREE
   switch (place) {
     case RenderPosition.AFTERBEGIN:
       container.prepend(element);
+      break;
+    case RenderPosition.AFTERNODE:
+      container.after(element);
       break;
     case RenderPosition.BEFOREEND:
     default:
