@@ -1,5 +1,8 @@
-import {createInfoTemplate} from './components/info.js';
-import {createPriceTemplate} from './components/price.js';
+// import {createInfoTemplate} from './components/info.js';
+import InfoComponent from './components/info.js';
+// import {createPriceTemplate} from './components/price.js';
+import PriceComponent from './components/price.js';
+
 import {createMenuTemplate} from './components/menu.js';
 import {createFilterTemplate} from './components/filter.js';
 import {createSortTemplate} from './components/sort.js';
@@ -9,6 +12,7 @@ import {createItemDayTemplate} from './components/itemDay.js';
 import {generateTrips} from './mock/trips.js';
 import {Menu, Filters, TRIP_POINT_VIEW} from './const.js';
 import {sortDateArray} from './utilsDate.js';
+import {renderElement, RenderPosition} from './utils.js';
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
@@ -31,9 +35,11 @@ const tripArray = generateTrips().sort(sortDateArray);
 const siteMainElement = document.querySelector(`.page-body`);
 const siteInfoElement = siteMainElement.querySelector(`.trip-main__trip-info`);
 
-render(siteInfoElement, createInfoTemplate(tripArray), `afterbegin`);
-render(siteInfoElement, createPriceTemplate(tripArray));
-
+// render(siteInfoElement, createInfoTemplate(tripArray), `afterbegin`);
+renderElement(siteInfoElement, new InfoComponent(tripArray).getElement(),
+    RenderPosition.AFTERBEGIN);
+// render(siteInfoElement, createPriceTemplate(tripArray));
+renderElement(siteInfoElement, new PriceComponent(tripArray).getElement())
 const siteControlElement = siteMainElement
   .querySelector(`.trip-main__trip-controls`);
 
