@@ -1,5 +1,6 @@
 import {TransferTypes, ActivityTypes, Cities, EventOffers} from '../const.js';
 import {castTimeFormat} from '../utilsDate.js';
+import {createElement} from '../utils.js';
 
 const getDateFormatSmallDateTime = (dateTime, separation = `/`) => {
   return (`${castTimeFormat(dateTime.getDate())}${separation}${
@@ -48,7 +49,7 @@ const createPhotoMarkup = (photo) => {
   );
 };
 
-export const createEditTemplate = (trip) => {
+const createEditTemplate = (trip) => {
   const {type, typeToLine, city, schedule: {timeStart, timeEnd},
     price, offers, description, photos} = trip;
 
@@ -166,3 +167,24 @@ export const createEditTemplate = (trip) => {
     </form>`
   );
 };
+
+export default class Edit {
+  constructor(trip) {
+    this._trip = trip;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEditTemplate(this._trip);
+  }
+
+  getElement() {
+    this._element = createElement(this.getTemplate());
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
