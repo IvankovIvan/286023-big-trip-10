@@ -10,7 +10,8 @@ import FilterComponent from './components/filter.js';
 import SortComponent from './components/sort.js';
 // import {createEditTemplate} from './components/edit.js';
 import EditComponent from './components/edit.js';
-import {createItemsTemplate} from './components/items.js';
+ //import {createItemsTemplate} from './components/items.js';
+ import ItemsCompoment from "./components/items";
 import {createItemDayTemplate} from './components/itemDay.js';
 import {generateTrips} from './mock/trips.js';
 import {Menu, Filters, TRIP_POINT_VIEW} from './const.js';
@@ -58,6 +59,6 @@ const siteEventsElement = siteMainElement.querySelector(`.trip-events`);
 renderElement(siteEventsElement, new SortComponent().getElement());
 // render(siteEventsElement, createEditTemplate(tripArray[0]));
 renderElement(siteEventsElement, new EditComponent(tripArray[0]).getElement());
-render(siteEventsElement, createItemsTemplate());
-
+// render(siteEventsElement, createItemsTemplate());
+renderElement(siteEventsElement, new ItemsCompoment().getElement());
 createTripList(tripArray, siteEventsElement.lastElementChild);
