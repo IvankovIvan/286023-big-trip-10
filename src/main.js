@@ -12,8 +12,28 @@ import {Menu, Filters, TRIP_POINT_VIEW} from './const.js';
 import {sortDateArray} from './utilsDate.js';
 import {renderElement, RenderPosition} from './utils.js';
 
+const renderTrip = (element, trip) => {
+  const tripComponent = new ItemComponent(trip);
+  const editComponent = new EditComponent(trip);
+  const editButton = tripComponent.getElement()
+    .querySelector(`.event__rollup-btn`);
+  editButton.addEventListener(`click`, () => {
+    element
+    .replaceChild(editComponent.getElement(), tripComponent.getElement());
+  });
+
+  editComponent.getElement().addEventListener(`submin`, (event) => {
+    element.replaceChild(tripComponent.getElement(), editComponent
+      .getElement());
+    event.preventDefault();
+
+  });
+  renderElement(element, tripComponent.getElement());
+};
+
+
 const createTripList = (trips, element) => {
-  const tripList = trips.slice(1, TRIP_POINT_VIEW);
+  const tripList = trips.slice(0, TRIP_POINT_VIEW);
   const dateArray = Array
     .from(new Set(tripList.map((trip) => Date.parse(trip.schedule.date))));
   dateArray.forEach((date) => {
@@ -25,9 +45,7 @@ const createTripList = (trips, element) => {
     renderElement(element, itemDayComponent);
     const tripEventsList = itemDayComponent
       .querySelector(`.trip-events__list`);
-    tripListFromDate.forEach((trip) => {
-      renderElement(tripEventsList, new ItemComponent(trip).getElement());
-    });
+    tripListFromDate.forEach((trip) => renderTrip(tripEventsList, trip));
   });
 };
 
@@ -42,12 +60,12 @@ renderElement(siteInfoElement, new PriceComponent(tripArray).getElement());
 
 const siteControlElement = siteMainElement
   .querySelector(`.trip-main__trip-controls`);
-renderElement(siteControlElement.firstElementChild, new MenuComponent(Menu).getElement(),
+renderElement(siteControlElement.firstElementChild,
+    new MenuComponent(Menu).getElement(),
     RenderPosition.AFTERNODE);
 renderElement(siteControlElement, new FilterComponent(Filters).getElement());
 
 const siteEventsElement = siteMainElement.querySelector(`.trip-events`);
 renderElement(siteEventsElement, new SortComponent().getElement());
-renderElement(siteEventsElement, new EditComponent(tripArray[0]).getElement());
 renderElement(siteEventsElement, new ItemsComponent().getElement());
 createTripList(tripArray, siteEventsElement.lastElementChild);
