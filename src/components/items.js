@@ -1,6 +1,6 @@
 import {createElement} from "../utils";
 
-export const createItemsTemplate = () => {
+const createItemsTemplate = () => {
   return (
     `<ul class="trip-days"></ul>`
   );

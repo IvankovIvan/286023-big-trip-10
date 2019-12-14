@@ -1,6 +1,7 @@
 import {MonthNames} from "../const";
 import {getDateFormatUS} from "../utilsDate";
 import {createItemTripTemplate} from './item.js';
+import {createElement} from "../utils";
 
 export const createItemDayTemplate = (trips) => {
   const {schedule} = trips[0];
@@ -22,4 +23,21 @@ export const createItemDayTemplate = (trips) => {
     </li>`
   );
 };
+
+export default class ItemDay {
+  constructor(trips) {
+    this._trips = trips;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createItemDayTemplate(this._trips);
+  }
+
+  getElement() {
+    this._element = createElement(this.getTemplate());
+
+    return this._element;
+  }
+}
 

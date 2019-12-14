@@ -1,18 +1,14 @@
-// import {createInfoTemplate} from './components/info.js';
 import InfoComponent from './components/info.js';
-// import {createPriceTemplate} from './components/price.js';
 import PriceComponent from './components/price.js';
-// import {createMenuTemplate} from './components/menu.js';
 import MenuComponent from './components/menu.js';
-// import {createFilterTemplate} from './components/filter.js';
 import FilterComponent from './components/filter.js';
-// import {createSortTemplate} from './components/sort.js';
 import SortComponent from './components/sort.js';
-// import {createEditTemplate} from './components/edit.js';
 import EditComponent from './components/edit.js';
- //import {createItemsTemplate} from './components/items.js';
- import ItemsCompoment from "./components/items";
-import {createItemDayTemplate} from './components/itemDay.js';
+// import {createItemsTemplate} from './components/items.js';
+import ItemsComponent from "./components/items";
+// import {createItemDayTemplate} from './components/itemDay.js';
+import ItemDayComponent from './components/itemDay.js';
+
 import {generateTrips} from './mock/trips.js';
 import {Menu, Filters, TRIP_POINT_VIEW} from './const.js';
 import {sortDateArray} from './utilsDate.js';
@@ -30,7 +26,8 @@ const createTripList = (trips, element) => {
     const tripListFromDate = tripList.filter((item) => {
       return Date.parse(item.schedule.date) === date;
     });
-    render(element, createItemDayTemplate(tripListFromDate));
+    // render(element, createItemDayTemplate(tripListFromDate));
+    renderElement(element, new ItemDayComponent(tripListFromDate).getElement());
   });
 };
 
@@ -60,5 +57,5 @@ renderElement(siteEventsElement, new SortComponent().getElement());
 // render(siteEventsElement, createEditTemplate(tripArray[0]));
 renderElement(siteEventsElement, new EditComponent(tripArray[0]).getElement());
 // render(siteEventsElement, createItemsTemplate());
-renderElement(siteEventsElement, new ItemsCompoment().getElement());
+renderElement(siteEventsElement, new ItemsComponent().getElement());
 createTripList(tripArray, siteEventsElement.lastElementChild);
