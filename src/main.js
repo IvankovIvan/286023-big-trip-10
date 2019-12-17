@@ -13,22 +13,19 @@ import {sortDateArray} from './utilsDate.js';
 import {renderElement, RenderPosition} from './utils.js';
 
 const renderTrip = (element, trip) => {
-  const tripComponent = new ItemComponent(trip);
-  const editComponent = new EditComponent(trip);
-  const editButton = tripComponent.getElement()
-    .querySelector(`.event__rollup-btn`);
+  const tripComponent = new ItemComponent(trip).getElement();
+  const editComponent = new EditComponent(trip).getElement();
+
+  const editButton = tripComponent.querySelector(`.event__rollup-btn`);
   editButton.addEventListener(`click`, () => {
-    element
-    .replaceChild(editComponent.getElement(), tripComponent.getElement());
+    element.replaceChild(editComponent, tripComponent);
   });
 
-  editComponent.getElement().addEventListener(`submin`, (event) => {
-    element.replaceChild(tripComponent.getElement(), editComponent
-      .getElement());
+  editComponent.addEventListener(`submit`, (event) => {
     event.preventDefault();
-
+    element.replaceChild(tripComponent, editComponent);
   });
-  renderElement(element, tripComponent.getElement());
+  renderElement(element, tripComponent);
 };
 
 
