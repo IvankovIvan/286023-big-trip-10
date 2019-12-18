@@ -1,5 +1,6 @@
 import {getTimeFormat} from '../utilsDate.js';
 import {getDateFormatUS} from "../utilsDate";
+import {createElement} from "../utils";
 
 const getTimeFormatString = (dateTime) => {
   const hour = dateTime.getHours();
@@ -27,7 +28,7 @@ const createOffersMarkup = (offers) => {
     .join(`\n`);
 };
 
-export const createItemTripTemplate = (trip) => {
+const createItemTripTemplate = (trip) => {
   const {type, city, typeToLine,
     schedule: {timeStart, timeEnd, duration}, price, offers} = trip;
 
@@ -70,4 +71,25 @@ export const createItemTripTemplate = (trip) => {
     </li>`
   );
 };
+
+export default class Item {
+  constructor(trip) {
+    this._trip = trip;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createItemTripTemplate(this._trip);
+  }
+
+  getElement() {
+    this._element = createElement(this.getTemplate());
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
 

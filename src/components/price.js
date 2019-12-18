@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const getTotalPrice = (tripArray) => {
   let sum = 0;
   tripArray.forEach((point) => {
@@ -9,12 +11,33 @@ const getTotalPrice = (tripArray) => {
   return sum;
 };
 
-export const createPriceTemplate = (tripArray) => {
+const createPriceTemplate = (totalPrice) => {
   return (
     `<p class="trip-info__cost">
       Total: &euro;&nbsp;<span class="trip-info__cost-value"
-      >${getTotalPrice(tripArray)}</span>
+      >${totalPrice}</span>
     </p>`
   );
 };
+
+export default class Price {
+  constructor(tripArray) {
+    this._totalPrice = getTotalPrice(tripArray);
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPriceTemplate(this._totalPrice);
+  }
+
+  getElement() {
+    this._element = createElement(this.getTemplate());
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
 
