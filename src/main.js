@@ -7,6 +7,7 @@ import EditComponent from './components/edit.js';
 import ItemsComponent from "./components/items";
 import ItemDayComponent from './components/itemDay.js';
 import ItemComponent from './components/item.js';
+import NoItemComponent from './components/noItem.js';
 import {generateTrips} from './mock/trips.js';
 import {Menu, Filters, TRIP_POINT_VIEW} from './const.js';
 import {sortDateArray} from './utilsDate.js';
@@ -14,20 +15,36 @@ import {renderElement, RenderPosition} from './utils.js';
 
 const renderTrip = (element, trip) => {
   const tripComponent = new ItemComponent(trip).getElement();
-  const editComponent = new EditComponent(trip).getElement();
+  const editComponent = new EditComponent(trip);
+  let editElement = editComponent.getElement();
+
+  const replaceEditTask = () => {
+    element.replaceChild(tripComponent, editElement);
+    editElement = editComponent.getElement();
+  };
+
+  const onEscKeydown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+    if (isEscKey) {
+      replaceEditTask();
+      document.removeEventListener(`keydown`, onEscKeydown);
+    }
+  };
+
+  const replaceTaskEdit = () => {
+    element.replaceChild(editElement, tripComponent);
+    document.addEventListener(`keydown`, onEscKeydown);
+  };
 
   const editButton = tripComponent.querySelector(`.event__rollup-btn`);
-  editButton.addEventListener(`click`, () => {
-    element.replaceChild(editComponent, tripComponent);
-  });
+  editButton.addEventListener(`click`, () => replaceTaskEdit());
 
-  editComponent.addEventListener(`submit`, (event) => {
+  editElement.addEventListener(`submit`, (event) => {
     event.preventDefault();
-    element.replaceChild(tripComponent, editComponent);
+    replaceEditTask();
   });
   renderElement(element, tripComponent);
 };
-
 
 const createTripList = (trips, element) => {
   const tripList = trips.slice(0, TRIP_POINT_VIEW);
@@ -47,12 +64,10 @@ const createTripList = (trips, element) => {
 };
 
 const tripArray = generateTrips().sort(sortDateArray);
-
+const isTrips = tripArray.length;
 const siteMainElement = document.querySelector(`.page-body`);
 const siteInfoElement = siteMainElement.querySelector(`.trip-main__trip-info`);
 
-renderElement(siteInfoElement, new InfoComponent(tripArray).getElement(),
-    RenderPosition.AFTERBEGIN);
 renderElement(siteInfoElement, new PriceComponent(tripArray).getElement());
 
 const siteControlElement = siteMainElement
@@ -63,6 +78,12 @@ renderElement(siteControlElement.firstElementChild,
 renderElement(siteControlElement, new FilterComponent(Filters).getElement());
 
 const siteEventsElement = siteMainElement.querySelector(`.trip-events`);
-renderElement(siteEventsElement, new SortComponent().getElement());
-renderElement(siteEventsElement, new ItemsComponent().getElement());
-createTripList(tripArray, siteEventsElement.lastElementChild);
+if (isTrips === 0) {
+  renderElement(siteEventsElement, new NoItemComponent().getElement());
+} else {
+  renderElement(siteInfoElement, new InfoComponent(tripArray).getElement(),
+      RenderPosition.AFTERBEGIN);
+  renderElement(siteEventsElement, new SortComponent().getElement());
+  renderElement(siteEventsElement, new ItemsComponent().getElement());
+  createTripList(tripArray, siteEventsElement.lastElementChild);
+}
