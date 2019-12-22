@@ -7,7 +7,7 @@ import EditComponent from './components/edit.js';
 import ItemsComponent from "./components/items";
 import ItemDayComponent from './components/itemDay.js';
 import ItemComponent from './components/item.js';
-import NoItemComponent from './components/noItem.js'
+import NoItemComponent from './components/noItem.js';
 import {generateTrips} from './mock/trips.js';
 import {Menu, Filters, TRIP_POINT_VIEW} from './const.js';
 import {sortDateArray} from './utilsDate.js';
@@ -15,31 +15,33 @@ import {renderElement, RenderPosition} from './utils.js';
 
 const renderTrip = (element, trip) => {
   const tripComponent = new ItemComponent(trip).getElement();
-  const editComponent = new EditComponent(trip).getElement();
+  const editComponent = new EditComponent(trip);
+  let editElement = editComponent.getElement();
 
-  const replaceEditToTask = () => {
-    element.replaceChild(tripComponent, editComponent);
+  const replaceEditTask = () => {
+    element.replaceChild(tripComponent, editElement);
+    editElement = editComponent.getElement();
   };
 
-  const onEscKeyDown = (evt) => {
+  const onEscKeydown = (evt) => {
     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
     if (isEscKey) {
-      replaceEditToTask();
-      document.removeEventListener(`keydown`, onEscKeyDown);
+      replaceEditTask();
+      document.removeEventListener(`keydown`, onEscKeydown);
     }
   };
 
-  const replaceTaskToEdit = () => {
-    element.replaceChild(editComponent, tripComponent);
-    addEventListener(`keydown`, onEscKeyDown);
+  const replaceTaskEdit = () => {
+    element.replaceChild(editElement, tripComponent);
+    document.addEventListener(`keydown`, onEscKeydown);
   };
 
   const editButton = tripComponent.querySelector(`.event__rollup-btn`);
-  editButton.addEventListener(`click`, () => replaceTaskToEdit());
+  editButton.addEventListener(`click`, () => replaceTaskEdit());
 
-  editComponent.addEventListener(`submit`, (event) => {
+  editElement.addEventListener(`submit`, (event) => {
     event.preventDefault();
-    replaceEditToTask();
+    replaceEditTask();
   });
   renderElement(element, tripComponent);
 };
