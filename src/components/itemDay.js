@@ -1,6 +1,6 @@
 import {MonthNames} from "../const";
 import {getDateFormatUS} from "../utilsDate";
-import {createElement} from "../utils";
+import AbstractComponent from "./abstract-component";
 
 const createItemDayTemplate = (trips) => {
   const {schedule} = trips[0];
@@ -21,20 +21,14 @@ const createItemDayTemplate = (trips) => {
   );
 };
 
-export default class ItemDay {
+export default class ItemDay extends AbstractComponent {
   constructor(trips) {
+    super();
     this._trips = trips;
-    this._element = null;
   }
 
   getTemplate() {
     return createItemDayTemplate(this._trips);
-  }
-
-  getElement() {
-    this._element = createElement(this.getTemplate());
-
-    return this._element;
   }
 }
 

@@ -1,6 +1,6 @@
 import {getTimeFormat} from '../utilsDate.js';
 import {getDateFormatUS} from "../utilsDate";
-import {createElement} from "../utils";
+import AbstractComponent from "./abstract-component";
 
 const getTimeFormatString = (dateTime) => {
   const hour = dateTime.getHours();
@@ -72,24 +72,14 @@ const createItemTripTemplate = (trip) => {
   );
 };
 
-export default class Item {
-  constructor(trip) {
+export default class Item extends AbstractComponent {
+  constructor(trip)  {
+    super();
     this._trip = trip;
-    this._element = null;
   }
 
   getTemplate() {
     return createItemTripTemplate(this._trip);
-  }
-
-  getElement() {
-    this._element = createElement(this.getTemplate());
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 

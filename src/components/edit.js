@@ -1,6 +1,6 @@
 import {TransferTypes, ActivityTypes, Cities, EventOffers} from '../const.js';
 import {castTimeFormat} from '../utilsDate.js';
-import {createElement} from '../utils.js';
+import AbstractComponent from "./abstract-component";
 
 const getDateFormatSmallDateTime = (dateTime, separation = `/`) => {
   return (`${castTimeFormat(dateTime.getDate())}${separation}${
@@ -168,23 +168,13 @@ const createEditTemplate = (trip) => {
   );
 };
 
-export default class Edit {
+export default class Edit extends AbstractComponent{
   constructor(trip) {
+    super();
     this._trip = trip;
-    this._element = null;
   }
 
   getTemplate() {
     return createEditTemplate(this._trip);
-  }
-
-  getElement() {
-    this._element = createElement(this.getTemplate());
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
