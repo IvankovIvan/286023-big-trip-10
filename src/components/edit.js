@@ -168,7 +168,7 @@ const createEditTemplate = (trip) => {
   );
 };
 
-export default class Edit extends AbstractComponent{
+export default class Edit extends AbstractComponent {
   constructor(trip) {
     super();
     this._trip = trip;
@@ -176,5 +176,9 @@ export default class Edit extends AbstractComponent{
 
   getTemplate() {
     return createEditTemplate(this._trip);
+  }
+
+  setSubmitHandler(handler) {
+    this.getElement().addEventListener(`submit`, handler);
   }
 }

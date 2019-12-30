@@ -73,7 +73,7 @@ const createItemTripTemplate = (trip) => {
 };
 
 export default class Item extends AbstractComponent {
-  constructor(trip)  {
+  constructor(trip) {
     super();
     this._trip = trip;
   }
