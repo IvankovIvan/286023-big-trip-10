@@ -11,16 +11,14 @@ import NoItemComponent from './components/noItem.js';
 import {generateTrips} from './mock/trips.js';
 import {Menu, Filters, TRIP_POINT_VIEW} from './const.js';
 import {sortDateArray} from './utilsDate.js';
-import {render, RenderPosition} from "./utils/render";
+import {render, RenderPosition, replace} from "./utils/render";
 
 const renderTrip = (element, trip) => {
   const tripComponent = new ItemComponent(trip);
   const editComponent = new EditComponent(trip);
-  let editElement = editComponent.getElement();
 
   const replaceEditTask = () => {
-    element.replaceChild(tripComponent.getElement(), editElement);
-    editElement = editComponent.getElement();
+    replace(tripComponent, editComponent);
   };
 
   const onEscKeydown = (evt) => {
@@ -32,16 +30,13 @@ const renderTrip = (element, trip) => {
   };
 
   const replaceTaskEdit = () => {
-    element.replaceChild(editElement, tripComponent.getElement());
+    replace(editComponent, tripComponent);
     document.addEventListener(`keydown`, onEscKeydown);
   };
 
-  const editButton = tripComponent.getElement().querySelector(`.event__rollup-btn`);
-  editButton.addEventListener(`click`, () => replaceTaskEdit());
+  tripComponent.setEditButtonClickHandler(replaceTaskEdit);
 
-  editElement.addEventListener(`submit`, () => {
-    replaceEditTask();
-  });
+  editComponent.setSubmitHandler(replaceEditTask);
   render(element, tripComponent);
 };
 

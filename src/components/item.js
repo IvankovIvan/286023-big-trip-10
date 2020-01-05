@@ -81,5 +81,10 @@ export default class Item extends AbstractComponent {
   getTemplate() {
     return createItemTripTemplate(this._trip);
   }
+
+  setEditButtonClickHandler(handler) {
+    this.getElement().querySelector(`.event__rollup-btn`)
+      .addEventListener(`click`, handler);
+  }
 }
 
