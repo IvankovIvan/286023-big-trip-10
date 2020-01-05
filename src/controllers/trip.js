@@ -6,10 +6,12 @@ import ItemDayComponent from "../components/itemDay";
 
 const renderTrip = (element, trip) => {
   const tripComponent = new ItemComponent(trip);
-  const editComponent = new EditComponent(trip);
+  let editComponent = new EditComponent(trip);
 
   const replaceEditTask = () => {
     replace(tripComponent, editComponent);
+    editComponent = new EditComponent(trip);
+    editComponent.setSubmitHandler(replaceEditTask);
   };
 
   const onEscKeydown = (evt) => {
@@ -26,8 +28,8 @@ const renderTrip = (element, trip) => {
   };
 
   tripComponent.setEditButtonClickHandler(replaceTaskEdit);
-
   editComponent.setSubmitHandler(replaceEditTask);
+
   render(element, tripComponent);
 };
 
