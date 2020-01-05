@@ -1,5 +1,5 @@
-import {createElement} from '../utils.js';
 import {tripsInfo} from '../utilsTrip';
+import AbstractComponent from "./abstract-component";
 
 const createInfoTemplate = (tripInfo) => {
   return (
@@ -12,22 +12,13 @@ const createInfoTemplate = (tripInfo) => {
   );
 };
 
-export default class Info {
+export default class Info extends AbstractComponent {
   constructor(tripArray) {
+    super();
     this._tripInfo = tripsInfo(tripArray);
-    this._element = null;
   }
 
   getTemplate() {
     return createInfoTemplate(this._tripInfo);
-  }
-
-  getElement() {
-    this._element = createElement(this.getTemplate());
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

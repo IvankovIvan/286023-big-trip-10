@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import AbstractComponent from "./abstract-component";
 
 const createItemsTemplate = () => {
   return (
@@ -6,22 +6,8 @@ const createItemsTemplate = () => {
   );
 };
 
-export default class Items {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Items extends AbstractComponent {
   getTemplate() {
     return createItemsTemplate();
-  }
-
-  getElement() {
-    this._element = createElement(this.getTemplate());
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
