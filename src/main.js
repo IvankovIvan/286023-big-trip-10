@@ -2,9 +2,6 @@ import InfoComponent from './components/info.js';
 import PriceComponent from './components/price.js';
 import MenuComponent from './components/menu.js';
 import FilterComponent from './components/filter.js';
-import SortComponent from './components/sort.js';
-import ItemsComponent from "./components/items";
-import NoItemComponent from './components/noItem.js';
 import {generateTrips} from './mock/trips.js';
 import {Menu, Filters} from './const.js';
 import {sortDateArray} from './utilsDate.js';
@@ -25,17 +22,11 @@ render(siteControlElement.firstElementChild, new MenuComponent(Menu),
     RenderPosition.AFTERNODE);
 render(siteControlElement, new FilterComponent(Filters));
 
-const isTrips = tripArray.length;
 const siteEventsElement = siteMainElement.querySelector(`.trip-events`);
-if (isTrips === 0) {
-  render(siteEventsElement, new NoItemComponent());
-} else {
+
+if (tripArray.length > 0) {
   render(siteInfoElement, new InfoComponent(tripArray),
       RenderPosition.AFTERBEGIN);
-  render(siteEventsElement, new SortComponent());
-  const itemsComponent = new ItemsComponent();
-  render(siteEventsElement, itemsComponent);
-
-  const tripController = new TripController(itemsComponent);
+  const tripController = new TripController(siteEventsElement);
   tripController.render(tripArray);
 }

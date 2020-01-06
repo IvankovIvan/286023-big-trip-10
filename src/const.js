@@ -109,3 +109,9 @@ export const MonthNames = [
 export const Filters = [`Everything`, `Future`, `Past`];
 
 export const Menu = [`Table`, `Stats`];
+
+export const SortType = {
+  EVENT: `event`,
+  PRICE: `price`,
+  TIME: `time`
+};

@@ -1,8 +1,12 @@
 import ItemComponent from "../components/item";
 import EditComponent from "../components/edit";
-import {render, replace} from "../utils/render";
+import {render, RenderPosition, replace} from "../utils/render";
 import {TRIP_POINT_VIEW} from "../const";
 import ItemDayComponent from "../components/itemDay";
+import ItemsComponent from "../components/items";
+import SortComponent from "../components/sort";
+import InfoComponent from "../components/info";
+import NoItemComponent from "../components/noItem";
 
 const renderTrip = (element, trip) => {
   const tripComponent = new ItemComponent(trip);
@@ -55,10 +59,22 @@ const createTripList = (trips, element) => {
 export default class TripController {
   constructor(container) {
     this._container = container;
+    this._itemsComponent = new ItemsComponent();
+    this._sortComponent = new SortComponent();
   }
 
   render(trips) {
-    const container = this._container.getElement();
-    createTripList(trips, container);
+    const container = this._container;
+
+    const isTrips = trips.length;
+    if (isTrips === 0) {
+      render(container, new NoItemComponent());
+    } else {
+      render(container, this._sortComponent);
+      render(this._container, this._itemsComponent);
+      const itemsComponent = this._itemsComponent.getElement();
+
+      createTripList(trips, itemsComponent);
+    }
   }
 }
