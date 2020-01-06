@@ -1,7 +1,7 @@
 import ItemComponent from "../components/item";
 import EditComponent from "../components/edit";
 import {render, replace} from "../utils/render";
-import {TRIP_POINT_VIEW} from "../const";
+import {SortType, TRIP_POINT_VIEW} from "../const";
 import ItemDayComponent from "../components/itemDay";
 import ItemsComponent from "../components/items";
 import SortComponent from "../components/sort";
@@ -59,6 +59,7 @@ export default class TripController {
   constructor(container) {
     this._container = container;
     this._itemsComponent = new ItemsComponent();
+    this._sortComponent = new SortComponent();
   }
 
   render(trips) {
@@ -68,9 +69,26 @@ export default class TripController {
     if (isTrips === 0) {
       render(container, new NoItemComponent());
     } else {
-      render(container, new SortComponent());
+      render(container, this._sortComponent);
       render(this._container, this._itemsComponent);
       const itemsComponent = this._itemsComponent.getElement();
+      this._sortComponent.setSortTypeChangeHandler((sortType) => {
+        let sortedTrips = trips.slice();
+        switch (sortType) {
+          case SortType.TIME:
+            sortedTrips = sortedTrips
+              .sort((a, b) => b.schedule.duration - a.schedule.duration);
+            break;
+          case SortType.PRICE:
+            sortedTrips = sortedTrips.sort((a, b) => b.price - a.price);
+            break;
+          case SortType.EVENT:
+          default:
+            break;
+        }
+        itemsComponent.innerHTML = ``;
+        createTripList(sortedTrips, itemsComponent);
+      });
 
       createTripList(trips, itemsComponent);
     }
